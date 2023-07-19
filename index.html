@@ -53,22 +53,43 @@
             var gusset = parseFloat(document.getElementById("gusset").value);
             var length = parseFloat(document.getElementById("length").value);
             var thickness = parseFloat(document.getElementById("thickness").value);
-            // var largeQty = parseFloat(document.getElementById("largeQty").value);
+            
+            var weight = ((width + gusset) * length * thickness) / 15 * 0.995;
+            var price = weight * 3.15 / 1000;
+            var minOrderQty = Math.ceil(2100 / weight * 1000);
+            // Round up the minOrderQty to end with 50 or 00
+            minOrderQty = Math.ceil(minOrderQty / 50) * 50;
+            var discountedPrice =  (weight * priceBreak(weight)/1000);
 
             if (gusset > width) {
                 alert("Gusset cannot be greater than width. please revise.");
             } else {
-                var weight = ((width + gusset) * length * thickness) / 15 * 0.995;
-                var price = weight * 3.15 / 1000;
-                var minOrderQty = Math.ceil(2100 / weight * 1000);
 
-                // Round up the minOrderQty to end with 50 or 00
-                minOrderQty = Math.ceil(minOrderQty / 50) * 50;
 
                 document.getElementById("weight").value = weight.toFixed(2);
                 document.getElementById("price").value = price.toFixed(2);
                 document.getElementById("minOrderQty").value = minOrderQty;
+                document.getElementById("discountedPrice").value = discountedPrice.toFixed(2);
             };
+        }
+
+        function priceBreak(orderWeight) {
+
+            //  var minOrderQty = Math.ceil(2100 / weight * 1000);
+
+            // Current price is based on a min order od 2100 add an option 
+
+            // I want to add these 2 options
+            // •	If order weight is between 4000 to 5000 then price is 3.0
+            // •	If order weight is between 5001 and up then price 2.8
+            console.log("order weight is: ", orderWeight);
+            if (orderWeight > 5000 ) {
+                return 3
+            } else if (orderWeight > 4000 && orderWeight < 5000){
+                return 2.8
+            } else{
+                return 3.15
+            }
         }
     </script>
 </head>
@@ -79,23 +100,21 @@
         <h2>Custom VCI Gusseted Bag Weight and Price Calculator V2</h2>
         <p>
             <label for="width">Bag Width (inches):</label>
-            <input type="number" id="width" value=10 required>
+            <input type="number" id="width" value=50 required>
         </p>
         <p>
             <label for="gusset">Bag Gusset (inches):</label>
-            <input type="number" id="gusset" value=10 required>
+            <input type="number" id="gusset" value=50 required>
         </p>
         <p><label for="length">Bag Length (inches):</label>
-            <input type="number" id="length" value=10 required>
+            <input type="number" id="length" value=50 required>
         </p>
 
         <p><label for="thickness">Bag Thickness (mil):</label>
-            <input type="number" id="thickness" value=10 required>
+            <input type="number" id="thickness" value=4 required>
         </p>
 
-        <p><label for="orderQty">Order Quantity:</label>
-            <input type="number" id="orderQty" value=10 required>
-        </p>
+
 
 
         <button type="button" onclick="calculateWeightAndPrice()">Calculate</button>
@@ -111,18 +130,13 @@
         </p>
 
         <p>
-            <label for="out">Weight Per 1000 Bags (lbs):</label>
-            <output id="weight"></output>
-        </p>
-
-        <p>
             <label for="out">Minimum Order Quantity:</label>
             <output id="minOrderQty"></output>
         </p>
 
         <p>
-            <label for="out">with Quantity discount:</label>
-            <output id="minOrderQty"></output>
+            <label for="out">Estimated Price Per Bag in US $ with Quantity discount:</label>
+            <output id="discountedPrice"></output>
         </p>
 
 
