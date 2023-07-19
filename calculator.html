@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>VCI Gusseted Bag Weight and Price Calculator</title>
+    <style>
+        .result {
+            color: blue;
+        }
+
+        /* Chrome, Safari, Edge, Opera */
+
+        input::-webkit-outer-spin-button,
+
+        input::-webkit-inner-spin-button {
+
+            -webkit-appearance: none;
+
+            margin: 0;
+
+        }
+
+        /* Firefox */
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+
+        form {
+            display: table;
+        }
+
+        p {
+            display: table-row;
+        }
+
+        label {
+            display: table-cell;
+            white-space: nowrap;
+            padding: 2px 30px 10px 0;
+        }
+
+        input {
+            display: table-cell;
+        }
+
+        /* button {} */
+    </style>
+    <script>
+        function calculateWeightAndPrice() {
+            console.log("in calculateWeightAndPrice() ");
+
+            var width = parseFloat(document.getElementById("width").value);
+            var gusset = parseFloat(document.getElementById("gusset").value);
+            var length = parseFloat(document.getElementById("length").value);
+            var thickness = parseFloat(document.getElementById("thickness").value);
+            // var largeQty = parseFloat(document.getElementById("largeQty").value);
+
+            if (gusset > width) {
+                alert("Gusset cannot be greater than width. please revise.");
+            } else {
+                var weight = ((width + gusset) * length * thickness) / 15 * 0.995;
+                var price = weight * 3.15 / 1000;
+                var minOrderQty = Math.ceil(2100 / weight * 1000);
+
+                // Round up the minOrderQty to end with 50 or 00
+                minOrderQty = Math.ceil(minOrderQty / 50) * 50;
+
+                document.getElementById("weight").value = weight.toFixed(2);
+                document.getElementById("price").value = price.toFixed(2);
+                document.getElementById("minOrderQty").value = minOrderQty;
+            };
+        }
+    </script>
+</head>
+
+<body>
+
+    <form>
+        <h2>Custom VCI Gusseted Bag Weight and Price Calculator V2</h2>
+        <p>
+            <label for="width">Bag Width (inches):</label>
+            <input type="number" id="width" value=10 required>
+        </p>
+        <p>
+            <label for="gusset">Bag Gusset (inches):</label>
+            <input type="number" id="gusset" value=10 required>
+        </p>
+        <p><label for="length">Bag Length (inches):</label>
+            <input type="number" id="length" value=10 required>
+        </p>
+
+        <p><label for="thickness">Bag Thickness (mil):</label>
+            <input type="number" id="thickness" value=10 required>
+        </p>
+
+        <p><label for="orderQty">Order Quantity:</label>
+            <input type="number" id="orderQty" value=10 required>
+        </p>
+
+
+        <button type="button" onclick="calculateWeightAndPrice()">Calculate</button>
+        <h3>Results:</h3>
+        <p>
+            <label for="out">Weight Per 1000 Bags (lbs):</label>
+            <output id="weight"></output>
+        </p>
+
+        <p>
+            <label for="out">Estimated Price Per Bag in US $:</label>
+            <output id="price"></output>
+        </p>
+
+        <p>
+            <label for="out">Weight Per 1000 Bags (lbs):</label>
+            <output id="weight"></output>
+        </p>
+
+        <p>
+            <label for="out">Minimum Order Quantity:</label>
+            <output id="minOrderQty"></output>
+        </p>
+
+        <p>
+            <label for="out">with Quantity discount:</label>
+            <output id="minOrderQty"></output>
+        </p>
+
+
+
+        <!-- <label for=""></label>
+        <input type="text" id="" readonly class="result"><br>
+        <input type="text" id="largeQtyprice" readonly class="result"><br>
+
+        <label for="minOrderQty"></label>
+        <input type="text" id="" readonly class="result">
+        <br>
+        <label for="largeQty">For Larger Qtys:</label>
+        <input type="number" id="largeQty"><br> -->
+        <!-- <button type="button" onclick="recalculateBiggerQty()">Re-Calculate with bigger Qty</button> -->
+
+    </form>
+
+
+
+</body>
+
+</html>
