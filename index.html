@@ -59,7 +59,17 @@
             var minOrderQty = Math.ceil(2100 / weight * 1000);
             // Round up the minOrderQty to end with 50 or 00
             minOrderQty = Math.ceil(minOrderQty / 50) * 50;
-            var discountedPrice =  (weight * priceBreak(weight)/1000);
+
+            var discountedPriceFirstBreak = weight * 3 / 1000;
+            var firstBreakOrderQty = Math.ceil(4000 / weight * 1000);
+            firstBreakOrderQty = Math.ceil(firstBreakOrderQty / 50) * 50;
+
+            var discountedPriceSecondBreak = weight * 2.8 / 1000;
+            var secondBreakOrderQty = Math.ceil(5000 / weight * 1000);
+            secondBreakOrderQty = Math.ceil(secondBreakOrderQty / 50) * 50;
+            
+            
+            
 
             if (gusset > width) {
                 alert("Gusset cannot be greater than width. please revise.");
@@ -69,28 +79,34 @@
                 document.getElementById("weight").value = weight.toFixed(2);
                 document.getElementById("price").value = price.toFixed(2);
                 document.getElementById("minOrderQty").value = minOrderQty;
-                document.getElementById("discountedPrice").value = discountedPrice.toFixed(2);
+                // document.getElementById("discountedPrice").value = discountedPrice.toFixed(2);
+
+                document.getElementById("firstBreakOrderQty").value = firstBreakOrderQty;
+                document.getElementById("discountedPriceFirstBreak").value = discountedPriceFirstBreak.toFixed(2);
+
+                document.getElementById("secondBreakOrderQty").value = secondBreakOrderQty;
+                document.getElementById("discountedPriceSecondBreak").value = discountedPriceSecondBreak.toFixed(2);
             };
         }
 
-        function priceBreak(orderWeight) {
+        // function priceBreak(orderWeight) {
 
-            //  var minOrderQty = Math.ceil(2100 / weight * 1000);
+        //     //  var minOrderQty = Math.ceil(2100 / weight * 1000);
 
-            // Current price is based on a min order od 2100 add an option 
+        //     // Current price is based on a min order od 2100 add an option 
 
-            // I want to add these 2 options
-            // •	If order weight is between 4000 to 5000 then price is 3.0
-            // •	If order weight is between 5001 and up then price 2.8
-            console.log("order weight is: ", orderWeight);
-            if (orderWeight > 5000 ) {
-                return 3
-            } else if (orderWeight > 4000 && orderWeight < 5000){
-                return 2.8
-            } else{
-                return 3.15
-            }
-        }
+        //     // I want to add these 2 options
+        //     // •	If order weight is between 4000 to 5000 then price is 3.0
+        //     // •	If order weight is between 5001 and up then price 2.8
+        //     console.log("order weight is: ", orderWeight);
+        //     if (orderWeight > 5000 ) {
+        //         return 3
+        //     } else if (orderWeight > 4000 && orderWeight < 5000){
+        //         return 2.8
+        //     } else{
+        //         return 3.15
+        //     }
+        // }
     </script>
 </head>
 
@@ -134,9 +150,24 @@
             <output id="minOrderQty"></output>
         </p>
 
+        <h3>Price Break #1</h3>
         <p>
-            <label for="out">Estimated Price Per Bag in US $ with Quantity discount:</label>
-            <output id="discountedPrice"></output>
+            
+            <label for="out">Bags</label>
+            <output id="firstBreakOrderQty"></output>
+        </p>
+        <p>
+            <label for="out">Price</label>
+            <output id="discountedPriceFirstBreak"></output>
+        </p>
+        <h3>Price Break #2</h3>
+        <p>
+            <label for="out">Bags</label>
+            <output id="secondBreakOrderQty"></output>
+        </p>
+        <p>
+            <label for="out">Price</label>
+            <output id="discountedPriceSecondBreak"></output>
         </p>
 
 
