@@ -4,6 +4,19 @@
 <head>
     <title>VCI Gusseted Bag Weight and Price Calculator</title>
     <style>
+        .flex-container {
+            display: flex;
+        }
+
+        .flex-child {
+            flex: 1;
+            /* border: 2px solid yellow; */
+        }
+
+        .flex-child:first-child {
+            margin-right: 20px;
+        }
+
         .result {
             color: blue;
         }
@@ -73,7 +86,7 @@
             color: green;
         }
 
-       
+
 
         /* button {} */
     </style>
@@ -206,87 +219,102 @@
 </head>
 
 <body>
-
-    <form>
+    <div>
         <h2>Custom VCI Gusseted Bag Weight and Price Calculator V1.1</h2>
-        <p>
-            <label for="width">Bag Width (inches):</label>
-            <input type="number" id="width" value=10 required>
-        <p class="error guesset-error"></p>
-        </p>
-        <p>
-            <label for="gusset">Bag Gusset (inches):</label>
-            <input type="number" id="gusset" value=10 required>
-        <p class="error guesset-error"></p>
-        </p>
-        <p><label for="length">Bag Length (inches):</label>
-            <input type="number" id="length" value=10 required>
-        </p>
+    </div>
+    <div class="flex-container">
+        <div class="flex-child">
+            <form>
+                <p>
+                    <label for="width">Bag Width (inches):</label>
+                    <input type="number" id="width" value=10 required>
+                <p class="error guesset-error"></p>
+                </p>
+                <p>
+                    <label for="gusset">Bag Gusset (inches):</label>
+                    <input type="number" id="gusset" value=10 required>
+                <p class="error guesset-error"></p>
+                </p>
+                <p><label for="length">Bag Length (inches):</label>
+                    <input type="number" id="length" value=10 required>
+                </p>
+        
+                <p><label for="thickness">Bag Thickness (mil):</label>
+                    <input type="number" id="thickness" value=4 required>
+                </p>
+        
+        
+        
+        
+        
+                <button type="button" onclick="calculateWeightAndPrice()">Calculate</button>
+                <p class="success"></p>
+                <h3>Results:</h3>
+                <h4>Prices valid for 14 days</h4>
+                <p>
+                    <label for="out">Date: </label>
+                    <output id="currentDate"></output>
+                </p>
+                <p>
+                    <label for="out">Weight Per 1000 Bags (lbs):</label>
+                    <output id="weight"></output>
+                </p>
+        
+                <p>
+                    <label for="out">Estimated Price Per Bag in US $:</label>
+                    <output id="price"></output>
+                </p>
+        
+                <p>
+                    <label for="out">Minimum Order Quantity:</label>
+                    <output id="minOrderQty"></output>
+                </p>
+        
+                <h3>Price Break #1</h3>
+                <p>
+        
+                    <label for="out">Order Quantity</label>
+                    <output id="firstBreakOrderQty"></output>
+                </p>
+                <p>
+                    <label for="out">Price Per bag in US $</label>
+                    <output id="discountedPriceFirstBreak"></output>
+                </p>
+                <h3>Price Break #2</h3>
+                <p>
+                    <label for="out">Order Quantity</label>
+                    <output id="secondBreakOrderQty"></output>
+                </p>
+                <p>
+                    <label for="out">Price Per bag in US $</label>
+                    <output id="discountedPriceSecondBreak"></output>
+                </p>
+        
+        
+        
+                <!-- <label for=""></label>
+                <input type="text" id="" readonly class="result"><br>
+                <input type="text" id="largeQtyprice" readonly class="result"><br>
+        
+                <label for="minOrderQty"></label>
+                <input type="text" id="" readonly class="result">
+                <br>
+                <label for="largeQty">For Larger Qtys:</label>
+                <input type="number" id="largeQty"><br> -->
+                <!-- <button type="button" onclick="recalculateBiggerQty()">Re-Calculate with bigger Qty</button> -->
+        
+            </form>
+        </div>
 
-        <p><label for="thickness">Bag Thickness (mil):</label>
-            <input type="number" id="thickness" value=4 required>
-        </p>
+        <div class="flex-child">
+            <blockquote class="imgur-embed-pub" lang="en" data-id="a/LH6xWNh" data-context="false"><a
+                href="//imgur.com/a/LH6xWNh"></a></blockquote>
+        <script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
+        </div>
 
-
-
-
-        <button type="button" onclick="calculateWeightAndPrice()">Calculate</button>
-        <p class="success"></p>
-        <h3>Results:</h3>
-        <h4>Prices valid for 14 days</h4>
-        <p>
-            <label for="out">Date: </label>
-            <output id="currentDate"></output>
-        </p>
-        <p>
-            <label for="out">Weight Per 1000 Bags (lbs):</label>
-            <output id="weight"></output>
-        </p>
-
-        <p>
-            <label for="out">Estimated Price Per Bag in US $:</label>
-            <output id="price"></output>
-        </p>
-
-        <p>
-            <label for="out">Minimum Order Quantity:</label>
-            <output id="minOrderQty"></output>
-        </p>
-
-        <h3>Price Break #1</h3>
-        <p>
-
-            <label for="out">Order Quantity</label>
-            <output id="firstBreakOrderQty"></output>
-        </p>
-        <p>
-            <label for="out">Price Per bag in US $</label>
-            <output id="discountedPriceFirstBreak"></output>
-        </p>
-        <h3>Price Break #2</h3>
-        <p>
-            <label for="out">Order Quantity</label>
-            <output id="secondBreakOrderQty"></output>
-        </p>
-        <p>
-            <label for="out">Price Per bag in US $</label>
-            <output id="discountedPriceSecondBreak"></output>
-        </p>
-
-
-
-        <!-- <label for=""></label>
-        <input type="text" id="" readonly class="result"><br>
-        <input type="text" id="largeQtyprice" readonly class="result"><br>
-
-        <label for="minOrderQty"></label>
-        <input type="text" id="" readonly class="result">
-        <br>
-        <label for="largeQty">For Larger Qtys:</label>
-        <input type="number" id="largeQty"><br> -->
-        <!-- <button type="button" onclick="recalculateBiggerQty()">Re-Calculate with bigger Qty</button> -->
-
-    </form>
+    </div>
+    
+    
 
 
 
