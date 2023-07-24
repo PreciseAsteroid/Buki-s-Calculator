@@ -73,6 +73,8 @@
             color: green;
         }
 
+       
+
         /* button {} */
     </style>
     <script>
@@ -85,43 +87,69 @@
             }
             document.querySelector(".success").innerHTML = "";
 
+            // Buki to change here
+            const showPrices = true;
+
             var width = parseFloat(document.getElementById("width").value);
             var gusset = parseFloat(document.getElementById("gusset").value);
             var length = parseFloat(document.getElementById("length").value);
             var thickness = parseFloat(document.getElementById("thickness").value);
 
             var weight = ((width + gusset) * length * thickness) / 15 * 0.995;
+            console.log("weight: ", weight);
 
             // price calculations
             var price = 0;
             var discountedPriceFirstBreak = 0;
             var discountedPriceSecondBreak = 0
-            if (width + gusset < 24 ) {
+            var minOrderQty = 0;
+            var firstBreakOrderQty = 0;
+            var secondBreakOrderQty = 0
+
+            if (width + gusset < 24) {
                 console.log("width + gusset < 24");
-                price = weight *  2.8 / 1000;
+                price = weight * 2.8 / 1000;
+                //Qty
+                minOrderQty = Math.ceil(1050 / weight * 1000);
+                firstBreakOrderQty = Math.ceil(2000 / weight * 1000);
+                secondBreakOrderQty = Math.ceil(3000 / weight * 1000);
                 discountedPriceFirstBreak = weight * 3.6 / 1000;
                 discountedPriceSecondBreak = weight * 2.9 / 1000;
-            } else if(width + gusset < 60 ) {
+
+                minOrderQty = Math.ceil(minOrderQty / 1000) * 1000;
+                firstBreakOrderQty = Math.ceil(firstBreakOrderQty / 1000) * 1000;
+                secondBreakOrderQty = Math.ceil(secondBreakOrderQty / 1000) * 1000;
+
+            } else if (width + gusset < 60) {
                 console.log("width + gusset < 60");
                 price = weight * 3.15 / 1000;
+                // Qtys
+                minOrderQty = Math.ceil(1050 / weight * 1000);
+                firstBreakOrderQty = Math.ceil(2000 / weight * 1000);
+                secondBreakOrderQty = Math.ceil(3000 / weight * 1000);
                 discountedPriceFirstBreak = weight * 3 / 1000;
                 discountedPriceSecondBreak = weight * 2.8 / 1000;
-                
+
+                minOrderQty = Math.ceil(minOrderQty / 1000) * 1000;
+                firstBreakOrderQty = Math.ceil(firstBreakOrderQty / 1000) * 1000;
+                secondBreakOrderQty = Math.ceil(secondBreakOrderQty / 1000) * 1000;
+
+
+            } else {
+                price = weight * 3.15 / 1000;
+                //Qtys
+                minOrderQty = Math.ceil(2100 / weight * 1000);
+                firstBreakOrderQty = Math.ceil(4000 / weight * 1000);
+                secondBreakOrderQty = Math.ceil(5000 / weight * 1000);
+                discountedPriceFirstBreak = weight * 3 / 1000;
+                discountedPriceSecondBreak = weight * 2.8 / 1000;
+
+                minOrderQty = Math.ceil(minOrderQty / 50) * 50;
+                firstBreakOrderQty = Math.ceil(firstBreakOrderQty / 50) * 50;
+                secondBreakOrderQty = Math.ceil(secondBreakOrderQty / 50) * 50;
+
+
             }
-
-            
-            var minOrderQty = Math.ceil(2100 / weight * 1000);
-            // Round up the minOrderQty to end with 50 or 00
-            minOrderQty = Math.ceil(minOrderQty / 50) * 50;
-
-            // var discountedPriceFirstBreak = weight * 3 / 1000;
-            var firstBreakOrderQty = Math.ceil(4000 / weight * 1000);
-            firstBreakOrderQty = Math.ceil(firstBreakOrderQty / 50) * 50;
-
-            // var discountedPriceSecondBreak = weight * 2.8 / 1000;
-            var secondBreakOrderQty = Math.ceil(5000 / weight * 1000);
-            secondBreakOrderQty = Math.ceil(secondBreakOrderQty / 50) * 50;
-
 
 
 
@@ -131,9 +159,12 @@
                 document.querySelector(".guesset-error").style.display = "block";
                 event.preventDefault();
                 return false;
-            } else {
-
-
+            } else if (width + gusset >= 120) {
+                document.querySelector(".guesset-error").innerHTML = "Custom quote needed for these parameters";
+                document.querySelector(".guesset-error").style.display = "block";
+                event.preventDefault();
+                return false;
+            } else if (showPrices) {
                 document.getElementById("weight").value = weight.toFixed(2);
                 document.getElementById("price").value = price.toFixed(2);
                 document.getElementById("minOrderQty").value = minOrderQty;
@@ -145,7 +176,29 @@
                 document.getElementById("secondBreakOrderQty").value = secondBreakOrderQty;
                 document.getElementById("discountedPriceSecondBreak").value = discountedPriceSecondBreak.toFixed(2);
                 document.querySelector(".success").innerHTML = "Success";
+
+            } {
+
+
+                document.getElementById("weight").value = weight.toFixed(2);
+                // document.getElementById("price").value = price.toFixed(2);
+                document.getElementById("minOrderQty").value = minOrderQty;
+                // document.getElementById("discountedPrice").value = discountedPrice.toFixed(2);
+
+                document.getElementById("firstBreakOrderQty").value = firstBreakOrderQty;
+                // document.getElementById("discountedPriceFirstBreak").value = discountedPriceFirstBreak.toFixed(2);
+
+                document.getElementById("secondBreakOrderQty").value = secondBreakOrderQty;
+                // document.getElementById("discountedPriceSecondBreak").value = discountedPriceSecondBreak.toFixed(2);
+                document.querySelector(".success").innerHTML = "Success";
             };
+
+            //date
+            n = new Date();
+            y = n.getFullYear();
+            m = n.getMonth() + 1;
+            d = n.getDate();
+            document.getElementById("currentDate").innerHTML = m + "/" + d + "/" + y;
         }
 
 
@@ -180,6 +233,11 @@
         <button type="button" onclick="calculateWeightAndPrice()">Calculate</button>
         <p class="success"></p>
         <h3>Results:</h3>
+        <h4>Prices valid for 14 days</h4>
+        <p>
+            <label for="out">Date: </label>
+            <output id="currentDate"></output>
+        </p>
         <p>
             <label for="out">Weight Per 1000 Bags (lbs):</label>
             <output id="weight"></output>
