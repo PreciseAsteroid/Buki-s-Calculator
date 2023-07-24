@@ -91,16 +91,34 @@
             var thickness = parseFloat(document.getElementById("thickness").value);
 
             var weight = ((width + gusset) * length * thickness) / 15 * 0.995;
-            var price = weight * 3.15 / 1000;
+
+            // price calculations
+            var price = 0;
+            var discountedPriceFirstBreak = 0;
+            var discountedPriceSecondBreak = 0
+            if (width + gusset < 24 ) {
+                console.log("width + gusset < 24");
+                price = weight *  2.8 / 1000;
+                discountedPriceFirstBreak = weight * 3.6 / 1000;
+                discountedPriceSecondBreak = weight * 2.9 / 1000;
+            } else if(width + gusset < 60 ) {
+                console.log("width + gusset < 60");
+                price = weight * 3.15 / 1000;
+                discountedPriceFirstBreak = weight * 3 / 1000;
+                discountedPriceSecondBreak = weight * 2.8 / 1000;
+                
+            }
+
+            
             var minOrderQty = Math.ceil(2100 / weight * 1000);
             // Round up the minOrderQty to end with 50 or 00
             minOrderQty = Math.ceil(minOrderQty / 50) * 50;
 
-            var discountedPriceFirstBreak = weight * 3 / 1000;
+            // var discountedPriceFirstBreak = weight * 3 / 1000;
             var firstBreakOrderQty = Math.ceil(4000 / weight * 1000);
             firstBreakOrderQty = Math.ceil(firstBreakOrderQty / 50) * 50;
 
-            var discountedPriceSecondBreak = weight * 2.8 / 1000;
+            // var discountedPriceSecondBreak = weight * 2.8 / 1000;
             var secondBreakOrderQty = Math.ceil(5000 / weight * 1000);
             secondBreakOrderQty = Math.ceil(secondBreakOrderQty / 50) * 50;
 
@@ -130,31 +148,14 @@
             };
         }
 
-        // function priceBreak(orderWeight) {
 
-        //     //  var minOrderQty = Math.ceil(2100 / weight * 1000);
-
-        //     // Current price is based on a min order od 2100 add an option
-
-        //     // I want to add these 2 options
-        //     // •	If order weight is between 4000 to 5000 then price is 3.0
-        //     // •	If order weight is between 5001 and up then price 2.8
-        //     console.log("order weight is: ", orderWeight);
-        //     if (orderWeight > 5000 ) {
-        //         return 3
-        //     } else if (orderWeight > 4000 && orderWeight < 5000){
-        //         return 2.8
-        //     } else{
-        //         return 3.15
-        //     }
-        // }
     </script>
 </head>
 
 <body>
 
     <form>
-        <h2>Custom VCI Gusseted Bag Weight and Price Calculator V2</h2>
+        <h2>Custom VCI Gusseted Bag Weight and Price Calculator V1.1</h2>
         <p>
             <label for="width">Bag Width (inches):</label>
             <input type="number" id="width" value=50 required>
