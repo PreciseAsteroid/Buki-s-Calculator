@@ -17,8 +17,17 @@
             margin-right: 20px;
         }
 
+        .imgur-embed-pub {
+            width: 20px;
+            height: 20px;
+        }
+
         .result {
             color: blue;
+        }
+
+        .priceRelated {
+            visibility: visible;
         }
 
         /* Chrome, Safari, Edge, Opera */
@@ -90,7 +99,8 @@
 
         /* button {} */
     </style>
-    <script>
+    <script >
+        
         function calculateWeightAndPrice() {
             console.log("in calculateWeightAndPrice() ");
 
@@ -100,8 +110,7 @@
             }
             document.querySelector(".success").innerHTML = "";
 
-            // Buki to change here
-            const showPrices = true;
+
 
             var width = parseFloat(document.getElementById("width").value);
             var gusset = parseFloat(document.getElementById("gusset").value);
@@ -177,7 +186,7 @@
                 document.querySelector(".guesset-error").style.display = "block";
                 event.preventDefault();
                 return false;
-            } else if (showPrices) {
+            } else {
                 document.getElementById("weight").value = weight.toFixed(2);
                 document.getElementById("price").value = price.toFixed(2);
                 document.getElementById("minOrderQty").value = minOrderQty;
@@ -190,21 +199,9 @@
                 document.getElementById("discountedPriceSecondBreak").value = discountedPriceSecondBreak.toFixed(2);
                 document.querySelector(".success").innerHTML = "Success";
 
-            } {
+            }
 
 
-                document.getElementById("weight").value = weight.toFixed(2);
-                // document.getElementById("price").value = price.toFixed(2);
-                document.getElementById("minOrderQty").value = minOrderQty;
-                // document.getElementById("discountedPrice").value = discountedPrice.toFixed(2);
-
-                document.getElementById("firstBreakOrderQty").value = firstBreakOrderQty;
-                // document.getElementById("discountedPriceFirstBreak").value = discountedPriceFirstBreak.toFixed(2);
-
-                document.getElementById("secondBreakOrderQty").value = secondBreakOrderQty;
-                // document.getElementById("discountedPriceSecondBreak").value = discountedPriceSecondBreak.toFixed(2);
-                document.querySelector(".success").innerHTML = "Success";
-            };
 
             //date
             n = new Date();
@@ -238,15 +235,15 @@
                 <p><label for="length">Bag Length (inches):</label>
                     <input type="number" id="length" value=10 required>
                 </p>
-        
+
                 <p><label for="thickness">Bag Thickness (mil):</label>
                     <input type="number" id="thickness" value=4 required>
                 </p>
-        
-        
-        
-        
-        
+
+
+
+
+
                 <button type="button" onclick="calculateWeightAndPrice()">Calculate</button>
                 <p class="success"></p>
                 <h3>Results:</h3>
@@ -259,24 +256,24 @@
                     <label for="out">Weight Per 1000 Bags (lbs):</label>
                     <output id="weight"></output>
                 </p>
-        
-                <p>
+
+                <p class="priceRelated">
                     <label for="out">Estimated Price Per Bag in US $:</label>
                     <output id="price"></output>
                 </p>
-        
+
                 <p>
                     <label for="out">Minimum Order Quantity:</label>
                     <output id="minOrderQty"></output>
                 </p>
-        
+
                 <h3>Price Break #1</h3>
                 <p>
-        
+
                     <label for="out">Order Quantity</label>
                     <output id="firstBreakOrderQty"></output>
                 </p>
-                <p>
+                <p class="priceRelated">
                     <label for="out">Price Per bag in US $</label>
                     <output id="discountedPriceFirstBreak"></output>
                 </p>
@@ -285,13 +282,13 @@
                     <label for="out">Order Quantity</label>
                     <output id="secondBreakOrderQty"></output>
                 </p>
-                <p>
+                <p class="priceRelated">
                     <label for="out">Price Per bag in US $</label>
                     <output id="discountedPriceSecondBreak"></output>
                 </p>
-        
-        
-        
+
+
+
                 <!-- <label for=""></label>
                 <input type="text" id="" readonly class="result"><br>
                 <input type="text" id="largeQtyprice" readonly class="result"><br>
@@ -302,22 +299,38 @@
                 <label for="largeQty">For Larger Qtys:</label>
                 <input type="number" id="largeQty"><br> -->
                 <!-- <button type="button" onclick="recalculateBiggerQty()">Re-Calculate with bigger Qty</button> -->
-        
+
             </form>
         </div>
 
-        <div class="flex-child">
+        <!-- <div class="flex-child">
             <blockquote class="imgur-embed-pub" lang="en" data-id="a/LH6xWNh" data-context="false"><a
                 href="//imgur.com/a/LH6xWNh"></a></blockquote>
         <script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
-        </div>
+        </div> -->
 
     </div>
-    
-    
 
 
 
+
+<script>
+    // Buki to change here
+    const showPrices = true;
+        if (!showPrices) {
+            console.log("hiding prices");
+            targList = document.getElementsByClassName("priceRelated");
+            // document.getElementsByClassName("priceRelated")
+            console.log(targList.length);
+            if (targList) {
+                for (var x = 0; x < targList.length; x++) {
+                    targList[x].style.visibility = "hidden";
+                    console.log("hiding prices");
+                }
+            }
+            // document.getElementsByClassName("priceRelated").style.visibility = "hidden";
+        }
+</script>
 </body>
 
 </html>
